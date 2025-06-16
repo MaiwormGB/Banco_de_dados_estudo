@@ -36,6 +36,6 @@ alter table emprestimo add constraint fk_usuario
 foreign key (id_usuario) references usuario(id);
 
 insert into usuario (nome_completo, matricula, email) 
-values ('Gabriel Maiworm', '123456', 'biel.maiworm@gmail.com');
+values ('Gabriel Maiworm', '123456', 'biel.maiworm@gmail.com'), ('Keikei', '789101', 'keikeihttpsslaoresto@gmail.com');
 
 
