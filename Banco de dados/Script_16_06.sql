@@ -16,9 +16,9 @@ create table filme(
 	id_filme serial,
 	titulo varchar(40),
 	descricao text,
-	ano_lancamento date,
-	id_linguagem int,
-	duracao_aluguel date,
+	ano_lancamento char(4),
+	id_lingua int,
+	duracao_aluguel int,
 	preco_aluguel numeric(4,2),
 	duracao int,
 	multa_reposicao numeric(4,2),
@@ -97,7 +97,7 @@ create table cliente(
 	ultimo_nome varchar(20),
 	id_endereco int,
 	email varchar(60),
-	data_criacao date,
+	data_criacao timestamp,
 	ultima_atualizacao timestamp,
 	ativo bool
 );
@@ -172,11 +172,81 @@ primary key (id_cliente)
 alter table funcionario add
 primary key (id_funcionario)
 
+--remover e adicionar colunas
+alter table filme drop column id_linguagem; 
+alter table filme add column id_lingua int;
+
+alter table cliente drop column data_criacao;
+alter table cliente add column data_criacao timestamp;
+
 
 alter table categoria_filme add constraint fk_categoria
 foreign key (id_categoria) references categoria(id_categoria);
  
-alter table 
+alter table categoria_filme add constraint fk_filme
+foreign key (id_filme) references filme(id_filme);
 
+alter table filme add constraint fk_lingua
+foreign key (id_lingua) references lingua(id_lingua);
 
+alter table ator_filme add constraint fk_ator
+foreign key (id_ator) references ator(id_ator);
 
+alter table ator_filme add constraint fk_filme
+foreign key (id_filme) references filme(id_filme);
+
+alter table inventario add constraint fk_filme
+foreign key (id_filme) references filme(id_filme);
+
+alter table aluguel add constraint fk_inventario
+foreign key (id_inventario) references inventario(id_inventario);
+
+alter table aluguel add constraint fk_funcionario
+foreign key (id_funcionario) references funcionario(id_funcionario);
+
+alter table pagamento add constraint fk_aluguel
+foreign key (id_aluguel) references aluguel(id_aluguel);
+
+alter table pagamento add constraint fk_funcionario
+foreign key (id_funcionario) references funcionario(id_funcionario);
+
+alter table funcionario add constraint fk_loja
+foreign key (id_loja) references loja(id_loja);
+
+alter table funcionario add constraint fk_endereco
+foreign key (id_endereco) references endereco(id_endereco);
+
+alter table endereco add constraint fk_cidade
+foreign key (id_cidade) references cidade(id_cidade);
+
+alter table cidade add constraint fk_pais
+foreign key (id_pais) references pais(id_pais);
+
+alter table aluguel add constraint fk_cliente
+foreign key (id_cliente) references cliente(id_cliente);
+
+alter table pagamento add constraint fk_cliente
+foreign key (id_cliente) references cliente(id_cliente);
+
+alter table loja add constraint fk_endereco
+foreign key (id_endereco) references endereco(id_endereco);
+
+alter table loja add constraint fk_funcionario
+foreign key (id_funcionario) references funcionario(id_funcionario);
+
+alter table cliente add constraint fk_loja 
+foreign key (id_loja) references loja(id_loja);
+
+-- inserção nas tabelas
+
+insert into pais(pais, ultima_atualizacao)
+values('Brasil','2025-06-20 00:00:00'),
+	  ('Portugal','2025-06-20 00:00:01');
+
+insert into cidade(cidade, id_pais ,ultima_atualizacao)
+values('Petrópolis', 1, '2025-06-20 00:00:01' ),
+	  ('Manaus', 1,'2025-06-20 00:00:01'),
+	  ('Lisboa', 2,'2025-06-20 00:00:01' );
+
+insert into endereco (enredeco, enredeco_2, distrito, id_cidade, cep, telefone)
+values('Rua Carls','Rua Varls','Distrito Larls', 1, '12345678', '5524768374653');
