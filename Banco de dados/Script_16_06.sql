@@ -250,3 +250,6 @@ values('Petrópolis', 1, '2025-06-20 00:00:01' ),
 
 insert into endereco (enredeco, enredeco_2, distrito, id_cidade, cep, telefone)
 values('Rua Carls','Rua Varls','Distrito Larls', 1, '12345678', '5524768374653');
+
+
+
